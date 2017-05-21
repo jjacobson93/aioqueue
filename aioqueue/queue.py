@@ -79,9 +79,15 @@ class Queue(object):
 
     def on(self, queue, durable=True, prefetch_count=1, prefetch_size=0, connection_global=False):
         def decorator(f):
-            @wraps(f)
-            def wrapper(data):
-                return f(data)
+            if inspect.iscoroutinefunction(f):
+                @wraps(f)
+                async def wrapper(data):
+                    return await f(data)
+            else:
+                @wraps(f)
+                def wrapper(data):
+                    return f(data)
+
             options = {
                 'queue': {
                     'durable': durable
