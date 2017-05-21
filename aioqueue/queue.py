@@ -60,7 +60,7 @@ class Queue(object):
         await task.send()
         return task
 
-    async def start(self, retry=5, **kwargs):
+    async def _connect_and_init(self, retry=5, **kwargs):
         await self._connect(retry=retry, **kwargs)
         for (queue, (handler, options)) in self._handlers.items():
             channel = await self._protocol.channel()
@@ -68,6 +68,14 @@ class Queue(object):
             await channel.basic_qos(**options['qos'])
             await channel.basic_consume(self._make_consumer(queue, handler), queue_name=queue)
             logger.info(f'Consuming on queue {queue}.')
+
+    def start(self, retry=5, **kwargs):
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self._connect_and_init(retry=retry **kwargs))
+        try:
+            loop.run_forever()
+        finally:
+            loop.close()
 
     def on(self, queue, durable=True, prefetch_count=1, prefetch_size=0, connection_global=False):
         def decorator(f):

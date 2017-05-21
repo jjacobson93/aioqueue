@@ -10,7 +10,7 @@ pip install aioqueue
 ```python
 from aioqueue import Queue
 q = Queue() # connects to rmqp://localhost:5671 by default
-await q.start()
+q.start() # runs the connection in an asyncio event loop
 ```
 
 ## Define a task

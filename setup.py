@@ -3,12 +3,13 @@ try:
 except ImportError:
     from distutils.core import setup
 
-version = '0.1.1'
+version = '0.1.2'
 
 install_requires = open('requirements.txt').read().strip().split()
 setup(
     name='aioqueue',
     description='A Python Task Queue library using RabbitMQ (aioamqp) and asyncio',
+    long_description='',
     version=version,
     url='https://github.com/jjacobson93/aioqueue',
     author='Jeremy Jacobson',
