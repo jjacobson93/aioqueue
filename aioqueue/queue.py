@@ -52,7 +52,7 @@ class Queue(object):
                 return
 
             await response.send(None, result)
-        return consumer  
+        return consumer
 
     async def create(self, task_name, data, no_response=False):
         channel = await self._protocol.channel()
@@ -68,7 +68,7 @@ class Queue(object):
             await channel.basic_qos(**options['qos'])
             await channel.basic_consume(self._make_consumer(queue, handler), queue_name=queue)
             logger.info(f'Consuming on queue {queue}.')
-        
+
     def on(self, queue, durable=True, prefetch_count=1, prefetch_size=0, connection_global=False):
         def decorator(f):
             @wraps(f)
@@ -81,7 +81,7 @@ class Queue(object):
                 'qos': {
                     'prefetch_count': prefetch_count,
                     'prefetch_size': prefetch_size,
-                    'connection_global': connection_global 
+                    'connection_global': connection_global
                 }
             }
             self._handlers[queue] = (wrapper, options)
