@@ -71,7 +71,7 @@ class Queue(object):
 
     def start(self, retry=5, **kwargs):
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(self._connect_and_init(retry=retry **kwargs))
+        loop.run_until_complete(self._connect_and_init(retry=retry, **kwargs))
         try:
             loop.run_forever()
         finally:
