@@ -1,0 +1,12 @@
+version: '2'
+services:
+  worker:
+    image: aioqueue
+    build: .
+    command: python examples/worker1.py
+  scheduler:
+    image: aioqueue
+    build: .
+    command: python examples/new_task1.py
+  rabbitmq:
+    image: 'library/rabbitmq:3.6-alpine'
