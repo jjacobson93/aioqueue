@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>README &mdash; aioqueue 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="aioqueue 0.2.0 documentation" href="index.html"/>
+        <link rel="next" title="aioqueue package" href="aioqueue.html"/>
+        <link rel="prev" title="Welcome to aioqueue’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> aioqueue
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#aioqueue">aioqueue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-queue">Create a queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-a-task">Define a task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trigger-a-task">Trigger a task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-result-of-a-task">Get the result of a task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#close-a-queue">Close a queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-async-with">Using <cite>async with</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sending-raw-bytes">Sending raw bytes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="aioqueue.html">aioqueue package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">aioqueue</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>README</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="readme">
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="aioqueue">
+<h2>aioqueue<a class="headerlink" href="#aioqueue" title="Permalink to this headline">¶</a></h2>
+<p>A Python Task Queue library using RabbitMQ (aioamqp) and asyncio</p>
+<div class="section" id="install">
+<h3>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">aioqueue</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-queue">
+<h3>Create a queue<a class="headerlink" href="#create-a-queue" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aioqueue</span> <span class="k">import</span> <span class="n">Queue</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span> <span class="c1"># connects to rmqp://localhost:5671 by default</span>
+
+<span class="c1"># on start-up, wait 10 seconds after each failure to connect (defaults to 5)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">(</span><span class="n">retry</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># start up the queue</span>
+<span class="n">q</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="c1"># runs the connection in an asyncio event loop</span>
+
+<span class="c1"># or if you need to start the queue asynchronously</span>
+<span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">start_async</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-a-task">
+<h3>Define a task<a class="headerlink" href="#define-a-task" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nd">@q</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_task</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+
+<span class="c1"># defines a queue named &#39;my_task&#39; when `start()` is called</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;world&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trigger-a-task">
+<h3>Trigger a task<a class="headerlink" href="#trigger-a-task" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span> <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-the-result-of-a-task">
+<h3>Get the result of a task<a class="headerlink" href="#get-the-result-of-a-task" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">t</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note: A call to <cite>result()</cite> isn’t necessary if you don’t want the result of the task. You can also pass <cite>no_response=True</cite> to <cite>q.create()</cite> if you really don’t want the result and don’t want the queue waiting around for a result. In that case, a call to <cite>result()</cite> will always return <cite>None</cite>.</p>
+</div>
+<div class="section" id="close-a-queue">
+<h3>Close a queue<a class="headerlink" href="#close-a-queue" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-async-with">
+<h3>Using <cite>async with</cite><a class="headerlink" href="#using-async-with" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">Queue</span><span class="p">()</span> <span class="k">as</span> <span class="n">q</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Go&#39;</span> <span class="p">})</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">t</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-raw-bytes">
+<h3>Sending raw bytes<a class="headerlink" href="#sending-raw-bytes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>When creating a task with <cite>task()</cite>, the data gets packed with <cite>msgpack</cite>. To prevent this and just send raw bytes, use the keyword argument <cite>raw=True</cite>. If you’re passing bytes that are not <cite>msgpack</cite> data and using the <cite>on()</cite> decorator, pass <cite>raw=True</cite> to <cite>on()</cite> as well</div></blockquote>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nd">@q</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;raw_task&#39;</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">raw_task</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># data is raw bytes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="license">
+<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<p>MIT</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="aioqueue.html" class="btn btn-neutral float-right" title="aioqueue package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to aioqueue’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jeremy Jacobson.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
