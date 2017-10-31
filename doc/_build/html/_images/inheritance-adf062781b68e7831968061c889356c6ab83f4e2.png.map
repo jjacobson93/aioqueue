@@ -1,6 +1,0 @@
-<map id="inheritancec5cd507285" name="inheritancec5cd507285">
-<area shape="rect" id="node1" href="aioqueue.html#aioqueue.exceptions.RemoteException" target="_top" title="aioqueue.exceptions.RemoteException" alt="" coords="5,153,275,179"/>
-<area shape="rect" id="node2" href="aioqueue.html#aioqueue.queue.Queue" target="_top" title="aioqueue.queue.Queue" alt="" coords="55,104,225,129"/>
-<area shape="rect" id="node3" href="aioqueue.html#aioqueue.response.Response" target="_top" title="aioqueue.response.Response" alt="" coords="35,55,245,80"/>
-<area shape="rect" id="node4" href="aioqueue.html#aioqueue.task.Task" target="_top" title="aioqueue.task.Task" alt="" coords="69,5,211,31"/>
-</map>

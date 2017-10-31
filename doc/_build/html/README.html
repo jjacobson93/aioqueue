@@ -92,9 +92,22 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#aioqueue">aioqueue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-queue">Create a queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-a-task">Define a task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trigger-a-task">Trigger a task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-result-of-a-task">Get the result of a task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#close-a-queue">Close a queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-async-with">Using <cite>async with</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sending-raw-bytes">Sending raw bytes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="aioqueue.html">aioqueue package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">aioqueue</a></li>
 </ul>
 
             
@@ -160,65 +173,74 @@
             
   <div class="section" id="readme">
 <h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h1>
-<p># aioqueue
-A Python Task Queue library using RabbitMQ (aioamqp) and asyncio</p>
-<p>## Install
-.. code:: python</p>
-<blockquote>
-<div>pip install aioqueue</div></blockquote>
-<p>## Create a queue
-.. code:: python</p>
-<blockquote>
-<div><p>from aioqueue import Queue
-q = Queue() # connects to rmqp://localhost:5671 by default</p>
-<p># on start-up, wait 10 seconds after each failure to connect (defaults to 5)
-q = Queue(retry=10)</p>
-<p># start up the queue
-q.start() # runs the connection in an asyncio event loop</p>
-<p># or if you need to start the queue asynchronously
-await q.start_async()</p>
-</div></blockquote>
-<p>## Define a task
-.. code:: python</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>&#64;q.on(‘my_task’)</dt>
-<dd><dl class="first last docutils">
-<dt>def my_task(data):</dt>
-<dd>‘’’
-defines a queue named ‘my_task’ when <cite>start()</cite> is called
-‘’’
-message = data[‘message’]
-print(message)
-return ‘world’</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
-<p>## Trigger a task
-.. code:: python</p>
-<blockquote>
-<div>t = await q.task(‘my_task’, { ‘message’: ‘hello’ })</div></blockquote>
-<p>## Get the result of a task
-.. code:: python</p>
-<blockquote>
-<div>result = await t.result()</div></blockquote>
+<div class="section" id="aioqueue">
+<h2>aioqueue<a class="headerlink" href="#aioqueue" title="Permalink to this headline">¶</a></h2>
+<p>A Python Task Queue library using RabbitMQ (aioamqp) and asyncio</p>
+<div class="section" id="install">
+<h3>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">aioqueue</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-queue">
+<h3>Create a queue<a class="headerlink" href="#create-a-queue" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aioqueue</span> <span class="k">import</span> <span class="n">Queue</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span> <span class="c1"># connects to rmqp://localhost:5671 by default</span>
+
+<span class="c1"># on start-up, wait 10 seconds after each failure to connect (defaults to 5)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">(</span><span class="n">retry</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># start up the queue</span>
+<span class="n">q</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="c1"># runs the connection in an asyncio event loop</span>
+
+<span class="c1"># or if you need to start the queue asynchronously</span>
+<span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">start_async</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-a-task">
+<h3>Define a task<a class="headerlink" href="#define-a-task" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nd">@q</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_task</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+
+<span class="c1"># defines a queue named &#39;my_task&#39; when `start()` is called</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;world&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trigger-a-task">
+<h3>Trigger a task<a class="headerlink" href="#trigger-a-task" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span> <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-the-result-of-a-task">
+<h3>Get the result of a task<a class="headerlink" href="#get-the-result-of-a-task" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">t</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>Note: A call to <cite>result()</cite> isn’t necessary if you don’t want the result of the task. You can also pass <cite>no_response=True</cite> to <cite>q.create()</cite> if you really don’t want the result and don’t want the queue waiting around for a result. In that case, a call to <cite>result()</cite> will always return <cite>None</cite>.</p>
-<p>## Close a queue
-.. code:: python</p>
+</div>
+<div class="section" id="close-a-queue">
+<h3>Close a queue<a class="headerlink" href="#close-a-queue" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-async-with">
+<h3>Using <cite>async with</cite><a class="headerlink" href="#using-async-with" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">Queue</span><span class="p">()</span> <span class="k">as</span> <span class="n">q</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Go&#39;</span> <span class="p">})</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">t</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-raw-bytes">
+<h3>Sending raw bytes<a class="headerlink" href="#sending-raw-bytes" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div>await q.close()</div></blockquote>
-<p>## Using <cite>async with</cite>
-.. code:: python</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>async with Queue() as q:</dt>
-<dd>t = await q.task(‘my_task’, { ‘message’: ‘Go’ })
-result = await t.result()</dd>
-</dl>
-</div></blockquote>
-<p>## Sending raw bytes
-When creating a task with <cite>task()</cite>, the data gets packed with <cite>msgpack</cite>. To prevent this and just send raw bytes, use the keyword argument <cite>raw=True</cite>. If you’re passing bytes that are not <cite>msgpack</cite> data and using the <cite>on()</cite> decorator, pass <cite>raw=True</cite> to <cite>on()</cite> as well</p>
+<div>When creating a task with <cite>task()</cite>, the data gets packed with <cite>msgpack</cite>. To prevent this and just send raw bytes, use the keyword argument <cite>raw=True</cite>. If you’re passing bytes that are not <cite>msgpack</cite> data and using the <cite>on()</cite> decorator, pass <cite>raw=True</cite> to <cite>on()</cite> as well</div></blockquote>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nd">@q</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;raw_task&#39;</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">raw_task</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="c1"># data is raw bytes</span>
@@ -227,8 +249,12 @@ When creating a task with <cite>task()</cite>, the data gets packed with <cite>m
 <span class="k">await</span> <span class="n">q</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="s1">&#39;my_task&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>## License
-MIT</p>
+</div>
+<div class="section" id="license">
+<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<p>MIT</p>
+</div>
+</div>
 </div>
 
 
