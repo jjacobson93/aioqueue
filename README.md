@@ -1,6 +1,6 @@
-================
+=======
 aioqueue
-================
+=======
 
 A Python Task Queue library using RabbitMQ (aioamqp) and asyncio
 
